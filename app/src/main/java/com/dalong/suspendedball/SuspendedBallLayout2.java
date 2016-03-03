@@ -22,15 +22,19 @@ public class SuspendedBallLayout2 extends LinearLayout {
     private ViewDragHelper mDragger;
 
     private View mDragView;
+
+    private View mDragView2;
+
     private Point initPointPosition = new Point();
-    private boolean isFist=true;
+    private Point initPointPosition2 = new Point();
+    private boolean isFirst;
 
     public SuspendedBallLayout2(Context context, AttributeSet attrs){
         super(context, attrs);
         mDragger = ViewDragHelper.create(this, 1.0f, new ViewDragHelper.Callback() {
             @Override
             public boolean tryCaptureView(View child, int pointerId){
-                return child == mDragView;
+                return child == mDragView||child == mDragView2;
             }
 
             @Override
@@ -75,6 +79,27 @@ public class SuspendedBallLayout2 extends LinearLayout {
 
                         initPointPosition.x=0;
                         initPointPosition.y=mY;
+                    }
+
+                    invalidate();
+                }
+                if(releasedChild == mDragView2){
+                    int mY=releasedChild.getTop();
+                    if(releasedChild.getTop()<0){
+                        mY=0;
+                    }
+                    if(releasedChild.getBottom()>getHeight()){
+                        mY=getHeight()-releasedChild.getHeight();
+                    }
+                    if(releasedChild.getRight()>getWidth()/2){
+                        mDragger.settleCapturedViewAt(getWidth()-mDragView2.getWidth(),mY);
+                        initPointPosition2.x=getWidth()-mDragView2.getWidth();
+                        initPointPosition2.y=mY;
+                    }else{
+                        mDragger.settleCapturedViewAt(0, mY);
+
+                        initPointPosition2.x=0;
+                        initPointPosition2.y=mY;
                     }
 
                     invalidate();
@@ -126,9 +151,20 @@ public class SuspendedBallLayout2 extends LinearLayout {
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         super.onLayout(changed, l, t, r, b);
+        if(!isFirst){
+            initPointPosition.x=mDragView.getLeft();
+            initPointPosition.y=mDragView.getTop();
+
+            initPointPosition2.x=mDragView2.getLeft();
+            initPointPosition2.y=mDragView2.getTop();
+            isFirst=true;
+        }
         mDragView.layout(initPointPosition.x,initPointPosition.y,
                 initPointPosition.x+mDragView.getMeasuredWidth(),
                 initPointPosition.y+mDragView.getMeasuredHeight());
+        mDragView2.layout(initPointPosition2.x,initPointPosition2.y,
+                initPointPosition2.x+mDragView2.getMeasuredWidth(),
+                initPointPosition2.y+mDragView2.getMeasuredHeight());
 
     }
 
@@ -136,5 +172,6 @@ public class SuspendedBallLayout2 extends LinearLayout {
     protected void onFinishInflate() {
         super.onFinishInflate();
         mDragView = getChildAt(0);
+        mDragView2 = getChildAt(1);
     }
 }
