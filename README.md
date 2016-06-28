@@ -3,12 +3,10 @@
 ## 效果图
 
     app:showPercent="1"
- ![image](https://github.com/dalong982242260/SuspendedBall/blob/master/img/qiu.gif)   
- ![image](https://github.com/dalong982242260/SuspendedBall/blob/master/img/feitian.gif)  
+ ![image](https://github.com/dalong982242260/SuspendedBall/blob/master/img/qiu.gif)   ![image](https://github.com/dalong982242260/SuspendedBall/blob/master/img/feitian.gif)  
  
     app:showPercent="0.5"
- ![image](https://github.com/dalong982242260/SuspendedBall/blob/master/img/qiu1.gif)   
- ![image](https://github.com/dalong982242260/SuspendedBall/blob/master/img/feitian1.gif) 
+ ![image](https://github.com/dalong982242260/SuspendedBall/blob/master/img/qiu1.gif)   ![image](https://github.com/dalong982242260/SuspendedBall/blob/master/img/feitian1.gif) 
 
 ##使用
         <?xml version="1.0" encoding="utf-8"?>
