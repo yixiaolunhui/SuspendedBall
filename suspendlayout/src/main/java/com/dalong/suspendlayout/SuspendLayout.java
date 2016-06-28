@@ -1,6 +1,7 @@
-package com.dalong.suspendedball;
+package com.dalong.suspendlayout;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Point;
 import android.support.v4.widget.ViewDragHelper;
 import android.util.AttributeSet;
@@ -17,24 +18,43 @@ import android.widget.TextView;
  * 悬浮球父布局
  * Created by zhouweilong on 16/2/27.
  */
-public class SuspendedBallLayout2 extends LinearLayout {
+public class SuspendLayout extends RelativeLayout {
 
     private ViewDragHelper mDragger;
 
     private View mDragView;
 
-    private View mDragView2;
-
     private Point initPointPosition = new Point();
-    private Point initPointPosition2 = new Point();
+
     private boolean isFirst;
 
-    public SuspendedBallLayout2(Context context, AttributeSet attrs){
-        super(context, attrs);
+    public float mPercent=1f;//显示百分比
+
+    public SuspendLayout(Context context) {
+        this(context,null);
+    }
+
+    public SuspendLayout(Context context, AttributeSet attrs) {
+        this(context, attrs,0);
+    }
+
+    public SuspendLayout(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        TypedArray typedArray=context.obtainStyledAttributes(attrs,R.styleable.SuspendLayout);
+        mPercent=typedArray.getFloat(R.styleable.SuspendLayout_showPercent,mPercent);
+        typedArray.recycle();
+        init();
+    }
+
+
+    /**
+     * 初始化
+     */
+    private void init() {
         mDragger = ViewDragHelper.create(this, 1.0f, new ViewDragHelper.Callback() {
             @Override
             public boolean tryCaptureView(View child, int pointerId){
-                return child == mDragView||child == mDragView2;
+                return child == mDragView;
             }
 
             @Override
@@ -68,38 +88,18 @@ public class SuspendedBallLayout2 extends LinearLayout {
                         mY=0;
                     }
                     if(releasedChild.getBottom()>getHeight()){
-                        mY=getHeight()-releasedChild.getHeight();
+                        mY=getHeight()-releasedChild.getMeasuredHeight();
                     }
-                    if(releasedChild.getRight()>getWidth()/2){
-                        mDragger.settleCapturedViewAt(getWidth()-mDragView.getWidth(),mY);
-                        initPointPosition.x=getWidth()-mDragView.getWidth();
+                    if(releasedChild.getRight()-releasedChild.getMeasuredWidth()/2>getWidth()/2){
+                        initPointPosition.x= (int) (getWidth()-mDragView.getWidth()*mPercent);
                         initPointPosition.y=mY;
-                    }else{
-                        mDragger.settleCapturedViewAt(0, mY);
+                        mDragger.settleCapturedViewAt(initPointPosition.x,initPointPosition.y);
 
-                        initPointPosition.x=0;
+                    }else{
+                        initPointPosition.x= (int) (0-mDragView.getWidth()*(1-mPercent));
                         initPointPosition.y=mY;
-                    }
+                        mDragger.settleCapturedViewAt(initPointPosition.x, initPointPosition.y );
 
-                    invalidate();
-                }
-                if(releasedChild == mDragView2){
-                    int mY=releasedChild.getTop();
-                    if(releasedChild.getTop()<0){
-                        mY=0;
-                    }
-                    if(releasedChild.getBottom()>getHeight()){
-                        mY=getHeight()-releasedChild.getHeight();
-                    }
-                    if(releasedChild.getRight()>getWidth()/2){
-                        mDragger.settleCapturedViewAt(getWidth()-mDragView2.getWidth(),mY);
-                        initPointPosition2.x=getWidth()-mDragView2.getWidth();
-                        initPointPosition2.y=mY;
-                    }else{
-                        mDragger.settleCapturedViewAt(0, mY);
-
-                        initPointPosition2.x=0;
-                        initPointPosition2.y=mY;
                     }
 
                     invalidate();
@@ -151,28 +151,29 @@ public class SuspendedBallLayout2 extends LinearLayout {
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         super.onLayout(changed, l, t, r, b);
-
         if(!isFirst){
             initPointPosition.x=mDragView.getLeft();
             initPointPosition.y=mDragView.getTop();
-
-            initPointPosition2.x=mDragView2.getLeft();
-            initPointPosition2.y=mDragView2.getTop();
             isFirst=true;
         }
+
         mDragView.layout(initPointPosition.x,initPointPosition.y,
                 initPointPosition.x+mDragView.getMeasuredWidth(),
                 initPointPosition.y+mDragView.getMeasuredHeight());
-        mDragView2.layout(initPointPosition2.x,initPointPosition2.y,
-                initPointPosition2.x+mDragView2.getMeasuredWidth(),
-                initPointPosition2.y+mDragView2.getMeasuredHeight());
 
+    }
+
+    /**
+     * 设置显示百分比
+     * @param percent
+     */
+    public void sethowPercent(float percent){
+        this.mPercent=percent;
     }
 
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        mDragView = getChildAt(0);
-        mDragView2 = getChildAt(1);
+        mDragView = getChildAt(getChildCount()-1);
     }
 }
