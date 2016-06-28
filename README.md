@@ -2,20 +2,11 @@
 悬浮球
 ## 效果图
 
-#球
-    app:showPercent="0.5"
- ![image](https://github.com/dalong982242260/SuspendedBall/blob/master/img/qiu.gif)
- 
     app:showPercent="1"
- ![image](https://github.com/dalong982242260/SuspendedBall/blob/master/img/qiu1.gif)   
+ ![image](https://github.com/dalong982242260/SuspendedBall/blob/master/img/qiu.gif)![image](https://github.com/dalong982242260/SuspendedBall/blob/master/img/feitian1.gif) 
  
-#自定义图片
     app:showPercent="0.5"
-![image](https://github.com/dalong982242260/SuspendedBall/blob/master/img/feitian.gif) 
-
-    app:showPercent="1"
-![image](https://github.com/dalong982242260/SuspendedBall/blob/master/img/feitian1.gif) 
-
+ ![image](https://github.com/dalong982242260/SuspendedBall/blob/master/img/qiu1.gif)![image](https://github.com/dalong982242260/SuspendedBall/blob/master/img/feitian.gif)    
 
 ##使用
         <?xml version="1.0" encoding="utf-8"?>
