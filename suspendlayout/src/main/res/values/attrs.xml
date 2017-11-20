@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="SuspendLayout">
-        <attr name="showPercent" format="float"/>
+    <declare-styleable name="DraggableFrameLayout">
+        <attr name="showPercent" format="float" />
+        <attr name="direction">
+            <enum name="all" value="0" />
+            <enum name="left" value="1" />
+            <enum name="right" value="2" />
+        </attr>
+
     </declare-styleable>
 </resources>

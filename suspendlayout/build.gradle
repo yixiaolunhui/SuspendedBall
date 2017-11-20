@@ -1,12 +1,11 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.novoda.bintray-release'
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.3"
+    compileSdkVersion 26
+    buildToolsVersion "26.0.2"
 
     defaultConfig {
         minSdkVersion 14
-        targetSdkVersion 23
+        targetSdkVersion 26
         versionCode 1
         versionName "1.0"
 
@@ -26,16 +25,8 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:23.4.0'
+    compile 'com.android.support:appcompat-v7:26.0.2'
     testCompile 'junit:junit:4.12'
 }
 
 
-publish {
-    userOrg = 'dalong982242260'
-    groupId = 'com.dalong'
-    artifactId = 'suspendlayout'
-    publishVersion = '1.0.0'
-    desc = 'A suspendlayout layout for Android'
-    website = 'https://github.com/dalong982242260/SuspendedBall'
-}
