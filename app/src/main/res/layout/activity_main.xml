@@ -1,39 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.dl.draggable.DraggableFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    app:showPercent="1"
-    app:direction="all"
     tools:context="com.dalong.suspendedball.MainActivity">
+
 
     <WebView
         android:id="@+id/webview"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <ImageView
-        android:src="@mipmap/feitian"
-        android:visibility="gone"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
 
-    <TextView
-        android:id="@+id/qiu"
-        android:text="求"
-        android:textSize="20sp"
-        android:background="@drawable/suspendedball"
-        android:layout_width="50dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:gravity="center"
-        android:textColor="#ffffff"
-        android:visibility="visible"
-        android:layout_height="50dp" />
+    <com.dl.draggable.DraggableFrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:direction="all"
+        app:showPercent="0.5">
 
+        <ImageView
+            android:id="@+id/qiu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:src="@mipmap/feitian"
+            android:visibility="visible" />
 
-</com.dl.draggable.DraggableFrameLayout>
+    </com.dl.draggable.DraggableFrameLayout>
+</FrameLayout>

@@ -24,7 +24,7 @@ public class DraggableFrameLayout extends FrameLayout {
 
     private ViewDragHelper dragHelper;
     private int screenWidth;
-    private int statusType = 0;//0左右   1左  2右
+    private int statusType = 0;//0无 随便移动   1靠左  2靠右 0靠左右
     private float showPercent = 1;
 
     private int finalLeft = -1;
@@ -87,24 +87,30 @@ public class DraggableFrameLayout extends FrameLayout {
                 int viewHeight = releasedChild.getHeight();
                 int curLeft = releasedChild.getLeft();
                 int curTop = releasedChild.getTop();
-                finalLeft = -(int) (viewWidth * (1 - showPercent));
+
                 finalTop = curTop < 0 ? 0 : curTop;
-
-                if ((curLeft + viewWidth / 2) > screenWidth / 2) {
-                    finalLeft = screenWidth - (int) (viewWidth * showPercent);
-                }
-
+                finalLeft = curLeft < 0 ? 0 : curLeft;
                 if ((finalTop + viewHeight) > getHeight()) {
                     finalTop = getHeight() - viewHeight;
                 }
+
+                if ((finalLeft + viewWidth) > getWidth()) {
+                    finalLeft = getWidth() - viewWidth;
+                }
                 switch (statusType) {
-                    case 0://左右
+                    case 0://无
                         break;
                     case 1://左
                         finalLeft = -(int) (viewWidth * (1 - showPercent));
                         break;
                     case 2://右
                         finalLeft = screenWidth - (int) (viewWidth * showPercent);
+                        break;
+                    case 3://左右
+                        finalLeft = -(int) (viewWidth * (1 - showPercent));
+                        if ((curLeft + viewWidth / 2) > screenWidth / 2) {
+                            finalLeft = screenWidth - (int) (viewWidth * showPercent);
+                        }
                         break;
                 }
                 dragHelper.settleCapturedViewAt(finalLeft, finalTop);

@@ -30,7 +30,7 @@
 |name|format|description|
 |:---:|:---:|:---:|
 | showPercent | float |设置显示百分比
-| direction | int |方向位置显示  left  right  all
+| direction | int |方向位置显示 none  left  right  all
 
 
 
